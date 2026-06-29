@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "io.github.lilysupralotus.twa",
+        "sha256_cert_fingerprints": ["E2:C0:7E:52:20:00:A6:13:1C:F2:73:40:FB:EC:8F:DD:96:BA:E2:DB:B5:B7:F9:7D:D8:E1:5D:DE:79:1C:3F:55"]
+      }
+    }]
