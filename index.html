@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Underwriter's Drill — National SAFE Exam Practice File</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1F2A44">
+<meta name="description" content="200 challenging practice questions for the NMLS National SAFE MLO exam.">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#ECE2C8;
+    --paper-deep:#DECBA0;
+    --card:#FAF4E4;
+    --ink:#202B45;
+    --ink-soft:#473D2E;
+    --rule:#A9824B;
+    --rule-soft:rgba(169,130,75,0.35);
+    --approve:#2B6E49;
+    --approve-bg:#DCEBE0;
+    --deny:#9C342A;
+    --deny-bg:#F2DCD7;
+    --shadow:rgba(32,43,69,0.22);
+    --radius:3px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    background-image:
+      radial-gradient(ellipse at 20% -10%, rgba(255,255,255,0.35), transparent 50%),
+      repeating-linear-gradient(0deg, rgba(169,130,75,0.05) 0px, rgba(169,130,75,0.05) 1px, transparent 1px, transparent 26px);
+    color:var(--ink-soft);
+    font-family:'Source Sans 3', sans-serif;
+    min-height:100vh;
+    padding:clamp(16px,4vw,48px) clamp(12px,4vw,24px) 64px;
+  }
+  .wrap{max-width:760px;margin:0 auto;}
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--rule);
+    font-weight:600;
+  }
+  h1,h2,h3{font-family:'Fraunces', serif; color:var(--ink); margin:0;}
+  h1{font-size:clamp(32px,6vw,52px); font-weight:680; letter-spacing:-0.01em; line-height:1.04;}
+  .subtitle{font-size:16px; line-height:1.55; color:var(--ink-soft); max-width:560px; margin-top:14px;}
+  .seal{
+    width:54px;height:54px;border:2px solid var(--ink);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;
+    letter-spacing:0.05em; color:var(--ink); flex-shrink:0;
+    background:repeating-radial-gradient(circle, transparent 0 6px, rgba(32,43,69,0.05) 6px 7px);
+  }
+  .header-row{display:flex;align-items:flex-start;gap:16px;margin-bottom:6px;}
+
+  /* ---------- Landing ---------- */
+  .card{
+    background:var(--card);
+    border:1px solid var(--rule-soft);
+    border-radius:var(--radius);
+    box-shadow:0 10px 30px var(--shadow);
+    padding:clamp(20px,4vw,34px);
+  }
+  .modes{display:grid; gap:14px; margin-top:28px;}
+  .mode-card{
+    border:1px solid var(--rule-soft);
+    background:var(--card);
+    border-radius:var(--radius);
+    padding:18px 20px;
+    cursor:pointer;
+    display:flex; justify-content:space-between; align-items:center; gap:16px;
+    transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+    text-align:left;
+    width:100%;
+    font-family:inherit;
+  }
+  .mode-card:hover{transform:translateY(-2px); box-shadow:0 8px 20px var(--shadow); border-color:var(--rule);}
+  .mode-card:focus-visible{outline:3px solid var(--ink); outline-offset:2px;}
+  .mode-title{font-family:'Fraunces',serif; font-weight:650; font-size:19px; color:var(--ink);}
+  .mode-desc{font-size:14px; color:var(--ink-soft); margin-top:4px; max-width:420px;}
+  .mode-tag{
+    font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--rule);
+    border:1px solid var(--rule-soft); border-radius:20px; padding:5px 11px; white-space:nowrap;
+  }
+  .cat-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:10px; margin-top:16px;}
+  .cat-chip{
+    border:1px solid var(--rule-soft); background:var(--card); border-radius:var(--radius);
+    padding:12px 14px; cursor:pointer; text-align:left; font-family:inherit;
+    transition:transform .15s ease, border-color .15s ease;
+  }
+  .cat-chip:hover{transform:translateY(-1px); border-color:var(--rule);}
+  .cat-chip:focus-visible{outline:3px solid var(--ink); outline-offset:2px;}
+  .cat-chip .name{font-weight:650; color:var(--ink); font-size:14.5px;}
+  .cat-chip .count{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--rule); margin-top:3px;}
+  .hidden{display:none !important;}
+  .back-link{
+    font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.05em;
+    color:var(--ink-soft); background:none; border:none; cursor:pointer; padding:0;
+    text-decoration:underline; text-transform:uppercase; margin-bottom:18px;
+  }
+
+  /* ---------- Quiz ---------- */
+  .file-bar{
+    display:flex; justify-content:space-between; align-items:center; gap:10px;
+    font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--ink-soft);
+    margin-bottom:10px; flex-wrap:wrap;
+  }
+  .file-no{color:var(--ink); font-weight:600;}
+  .tally span{margin-left:10px;}
+  .tally .ok{color:var(--approve); font-weight:600;}
+  .tally .no{color:var(--deny); font-weight:600;}
+  .progress-track{height:5px; background:rgba(169,130,75,0.25); border-radius:4px; overflow:hidden; margin-bottom:18px;}
+  .progress-fill{height:100%; background:var(--ink); transition:width .25s ease;}
+  .cat-tag{
+    display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.08em;
+    text-transform:uppercase; color:var(--rule); border:1px solid var(--rule-soft); border-radius:20px;
+    padding:4px 10px; margin-bottom:14px;
+  }
+  .qtext{font-family:'Fraunces',serif; font-size:clamp(20px,3vw,25px); font-weight:600; color:var(--ink); line-height:1.32; margin-bottom:22px;}
+  .options{display:grid; gap:10px;}
+  .opt{
+    display:flex; align-items:flex-start; gap:12px; text-align:left;
+    border:1.5px solid var(--rule-soft); background:var(--card); border-radius:var(--radius);
+    padding:13px 16px; cursor:pointer; font-family:'Source Sans 3', sans-serif; font-size:15.5px; line-height:1.4;
+    color:var(--ink-soft); width:100%; transition:border-color .12s ease, background .12s ease;
+  }
+  .opt:hover:not(.locked){border-color:var(--ink);}
+  .opt:focus-visible{outline:3px solid var(--ink); outline-offset:2px;}
+  .opt .letter{
+    font-family:'IBM Plex Mono',monospace; font-weight:600; color:var(--rule); flex-shrink:0; width:18px;
+  }
+  .opt.selected{border-color:var(--ink); background:#F3ECD6;}
+  .opt.locked{cursor:default;}
+  .opt.correct-answer{border-color:var(--approve); background:var(--approve-bg);}
+  .opt.correct-answer .letter{color:var(--approve);}
+  .opt.wrong-answer{border-color:var(--deny); background:var(--deny-bg);}
+  .opt.wrong-answer .letter{color:var(--deny);}
+
+  .actions{margin-top:22px; display:flex; justify-content:flex-end;}
+  .btn{
+    font-family:'IBM Plex Mono',monospace; font-size:13px; letter-spacing:0.05em; text-transform:uppercase;
+    background:var(--ink); color:var(--card); border:none; border-radius:2px; padding:12px 22px;
+    cursor:pointer; font-weight:600;
+  }
+  .btn:disabled{opacity:0.35; cursor:not-allowed;}
+  .btn:hover:not(:disabled){background:#2E3D63;}
+  .btn:focus-visible{outline:3px solid var(--rule); outline-offset:2px;}
+  .btn.ghost{background:none; color:var(--ink); border:1.5px solid var(--ink);}
+  .btn.ghost:hover{background:rgba(32,43,69,0.06);}
+
+  .ruling-wrap{position:relative; margin-top:20px;}
+  .ruling{
+    border-left:4px solid var(--rule); background:#F3ECD6; border-radius:0 var(--radius) var(--radius) 0;
+    padding:14px 18px; font-size:14.5px; line-height:1.55; color:var(--ink-soft);
+  }
+  .ruling .label{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.1em; color:var(--rule); display:block; margin-bottom:5px; text-transform:uppercase;}
+
+  .stamp{
+    position:absolute; top:-58px; right:6px;
+    font-family:'Fraunces',serif; font-weight:800; font-size:30px; letter-spacing:0.08em;
+    text-transform:uppercase; padding:8px 18px; border-radius:6px;
+    border:5px double currentColor; transform:rotate(-9deg);
+    pointer-events:none; opacity:0;
+    animation:stampDown .42s cubic-bezier(.2,1.4,.4,1) forwards;
+  }
+  .stamp.approve{color:var(--approve);}
+  .stamp.deny{color:var(--deny);}
+  @keyframes stampDown{
+    0%{opacity:0; transform:scale(2.6) rotate(-22deg);}
+    65%{opacity:1; transform:scale(0.9) rotate(-6deg);}
+    100%{opacity:1; transform:scale(1) rotate(-9deg);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .stamp{animation:none; opacity:1; transform:rotate(-9deg);}
+  }
+  @media (max-width:480px){
+    .stamp{position:static; display:inline-block; margin-bottom:10px; transform:rotate(-4deg); font-size:22px;}
+  }
+
+  /* ---------- Results ---------- */
+  .verdict-row{display:flex; align-items:center; gap:18px; flex-wrap:wrap; margin-bottom:6px;}
+  .verdict-stamp{
+    font-family:'Fraunces',serif; font-weight:800; font-size:clamp(34px,7vw,52px);
+    letter-spacing:0.06em; text-transform:uppercase; border:5px double currentColor;
+    padding:6px 20px; border-radius:6px; transform:rotate(-6deg);
+  }
+  .verdict-stamp.approve{color:var(--approve);}
+  .verdict-stamp.deny{color:var(--deny);}
+  .score-line{font-family:'IBM Plex Mono',monospace; font-size:15px; color:var(--ink-soft);}
+  .breakdown{margin-top:26px; display:grid; gap:10px;}
+  .bd-row{display:grid; grid-template-columns:1fr auto; gap:10px; align-items:center; font-size:13.5px;}
+  .bd-name{font-family:'IBM Plex Mono',monospace; color:var(--ink-soft);}
+  .bd-bar-track{grid-column:1/3; height:7px; background:rgba(169,130,75,0.2); border-radius:4px; overflow:hidden;}
+  .bd-bar-fill{height:100%; background:var(--ink);}
+  .bd-score{font-family:'IBM Plex Mono',monospace; color:var(--rule); text-align:right;}
+  .results-actions{display:flex; gap:10px; margin-top:28px; flex-wrap:wrap;}
+  .missed-list{margin-top:22px; display:grid; gap:14px;}
+  .missed-item{border:1px solid var(--rule-soft); border-radius:var(--radius); padding:14px 16px; background:var(--card);}
+  .missed-q{font-family:'Fraunces',serif; font-weight:600; color:var(--ink); font-size:16px; margin-bottom:8px;}
+  .missed-line{font-size:13.5px; margin-bottom:3px;}
+  .missed-line.your{color:var(--deny);}
+  .missed-line.right{color:var(--approve);}
+  .missed-exp{font-size:13.5px; color:var(--ink-soft); margin-top:6px; line-height:1.5;}
+
+  footer.note{margin-top:34px; font-size:12px; color:var(--ink-soft); opacity:0.75; font-family:'IBM Plex Mono',monospace; line-height:1.6;}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+
+<script>
+/* =================== DATA =================== */
+const DATA = [
+{cat:"TILA & TRID", q:"Under TRID, the Loan Estimate must generally be delivered to the borrower within how many business days of receiving a completed application?", o:["1 business day","3 business days","7 business days","10 business days"], a:1, e:"Initial disclosures (the Loan Estimate) are due within 3 business days of receiving the six SAVLIN pieces of information that make an application complete."},
+{cat:"TILA & TRID", q:"Which combination of items makes an application 'complete' under TRID's SAVLIN standard?", o:["Name, SSN, employment history, credit score, loan amount, down payment","SSN, loan amount, credit score, appraisal, title report, income","Name, SSN, gross monthly income, loan amount, property address, estimate of value","Name, address, income, employment, assets, liabilities"], a:2, e:"SAVLIN = SSN, Address, Value estimate, Loan amount, Income, Name."},
+{cat:"TILA & TRID", q:"A valid change of circumstance increasing estimated charges requires a revised Loan Estimate within how many business days of the event, and no later than how many business days before closing?", o:["3 days / 4 days","5 days / 3 days","1 day / 7 days","3 days / 7 days"], a:0, e:"Revised LE must be issued within 3 business days of the triggering event, and no later than 4 business days before consummation."},
+{cat:"TILA & TRID", q:"Which fee category is generally subject to 'zero tolerance' under TRID — meaning it cannot increase at all between the Loan Estimate and Closing Disclosure?", o:["Recording fees","Owner's title insurance the borrower is allowed to shop for","Origination charges","A pest inspection fee the borrower selected on their own"], a:2, e:"Origination charges, transfer taxes, and fees for services the borrower isn't allowed to shop for fall under zero tolerance."},
+{cat:"TILA & TRID", q:"The Closing Disclosure must generally be received by the borrower how many business days before consummation?", o:["1 business day","3 business days","5 business days","7 business days"], a:1, e:"TRID requires a 3-business-day waiting period after the Closing Disclosure is received, using the 'all days except Sundays and listed holidays' definition of business day."},
+{cat:"TILA & TRID", q:"Which of the following loan types is NOT covered by TRID and continues to use the older GFE/HUD-1/TIL disclosures?", o:["A conventional purchase loan","A home equity line of credit","An FHA purchase loan","A VA refinance"], a:1, e:"TRID does not apply to HELOCs, reverse mortgages (HECMs), or mortgages secured by a mobile home/dwelling not attached to real property."},
+{cat:"TILA & TRID", q:"Under TRID's tolerance categories, which of the following belongs in the 'cumulative 10% tolerance' bucket rather than zero tolerance?", o:["Transfer taxes","Government recording fees","Origination fee","Prepaid interest"], a:1, e:"Recording fees and third-party services the borrower is allowed to shop for from the creditor's list fall under the 10% cumulative tolerance; transfer taxes and origination charges are zero tolerance."},
+{cat:"TILA & TRID", q:"Which fee is subject to NO tolerance requirement at all under TRID, meaning it can increase by any amount?", o:["Recording fees","Property taxes due at closing","Origination fee","Appraisal fee (a service the borrower cannot shop for)"], a:1, e:"Prepaid items like property taxes, homeowner's/flood insurance, and per-diem prepaid interest have no tolerance limit."},
+{cat:"TILA & TRID", q:"Under TRID, which party is ultimately responsible for ensuring the Closing Disclosure reaches the borrower?", o:["The settlement agent", "The real estate broker", "The creditor", "The mortgage broker"], a:2, e:"The creditor is responsible for delivering the CD to the borrower, even if a settlement agent provides it on the creditor's behalf."},
+{cat:"TILA & TRID", q:"Which event does NOT trigger a new 3-business-day waiting period before closing when a Closing Disclosure must be corrected?", o:["A change in the loan product (fixed to adjustable)","The addition of a prepayment penalty","An increase in APR beyond the applicable tolerance","A non-numerical clerical error discovered after closing"], a:3, e:"Clerical errors and tolerance-cure corrections discovered after closing trigger a corrected CD within 60 days, but not a new pre-closing waiting period since closing already occurred."},
+{cat:"TILA & TRID", q:"A lender must refund any amounts collected in excess of TRID tolerance limits within how many calendar days after consummation?", o:["30 days","45 days","60 days","90 days"], a:2, e:"Excess charges beyond tolerance limits must be refunded within 60 calendar days of closing."},
+{cat:"TILA & TRID", q:"Under TILA's APR accuracy rules, what is the maximum allowable tolerance for an irregular (non-traditional) transaction before redisclosure is required?", o:["1/8 of one percentage point","1/4 of one percentage point","1/2 of one percentage point","1 full percentage point"], a:1, e:"Regular transactions allow a 1/8% tolerance; irregular transactions allow 1/4%."},
+{cat:"TILA & TRID", q:"A borrower applying for a HELOC on their primary residence must receive which booklet within three days of application, in addition to other TILA materials?", o:["The CHARM booklet","The Special Information Booklet","'When Your Home Is on the Line'","The Home Loan Toolkit"], a:2, e:"'When Your Home Is on the Line' is required for home equity loans, HELOCs, and refinances within 3 days of application."},
+{cat:"TILA & TRID", q:"On a refinance of a principal residence with rescission rights, how many copies of the Notice of Right to Rescind must each borrower on the loan receive?", o:["1 copy","2 copies","3 copies","4 copies"], a:1, e:"Everyone on the loan gets two copies of the rescission notice, though only one borrower needs to exercise the right to cancel the deal."},
+{cat:"TILA & TRID", q:"When calculating the three-day rescission deadline, which days are excluded?", o:["Saturdays only","Sundays and federal holidays","Weekends only","Only the day of closing, but Sundays still count"], a:1, e:"The rescission period excludes the day of closing, Sundays, and federal legal holidays."},
+{cat:"TILA & TRID", q:"Under the MDIA '3/7/3 Rule,' what is the minimum number of business days that must elapse between providing initial disclosures and consummation?", o:["3 days","5 days","7 days","10 days"], a:2, e:"At least 7 business days must pass between initial disclosures and closing; if redisclosure is needed, an additional 3 days are required."},
+{cat:"TILA & TRID", q:"Stating which of the following in a mortgage advertisement triggers the requirement to also disclose repayment terms and the APR?", o:["The lender's NMLS number alone","The amount or percentage of a down payment","The fact that financing is available","The general location of the property"], a:1, e:"Down payment amounts/percentages, repayment terms, and balloon payment amounts are 'triggering terms' under TILA's advertising rules."},
+{cat:"TILA & TRID", q:"A first-lien, high-cost (Section 32) mortgage on a loan over $50,000 is triggered when the APR exceeds APOR by more than:", o:["1.5 percentage points","5 percentage points","6.5 percentage points","8.5 percentage points"], a:2, e:"First liens over $50,000 trigger Section 32 status at 6.5 points over APOR; smaller first liens and second liens trigger at 8.5 points."},
+{cat:"TILA & TRID", q:"Under HOEPA's Section 35 high-priced mortgage loan rules, escrow for taxes and insurance must be maintained for a minimum of:", o:["1 year","3 years","5 years","The life of the loan, with no exceptions"], a:2, e:"Section 35 loans require escrow to be established and maintained for at least 5 years."},
+{cat:"TILA & TRID", q:"Under the Section 32 points-and-fees coverage test, a loan amount of $21,549 or more is considered high-cost if points and fees exceed:", o:["3% of the loan amount","5% of the loan amount","8% of the loan amount","10% of the loan amount"], a:1, e:"Loans of $21,549 or more trigger at 5%; smaller loans trigger at the lesser of 8% or $1,077."},
+
+{cat:"RESPA", q:"RESPA applies to which of the following transactions?", o:["Vacant land where no dwelling will be built within two years","A purchase of a 1-4 unit owner-occupied home financed with a conventional loan","An all-cash sale with no financing involved","A loan secured by 30 acres of agricultural land"], a:1, e:"RESPA covers 1-4 unit owner-occupied purchase, refinance, and similar transactions; it excludes all-cash sales, large agricultural parcels (25+ acres), and most undeveloped land."},
+{cat:"RESPA", q:"Which transaction is specifically exempt from RESPA coverage?", o:["A refinance of a primary residence","A home equity line of credit","A temporary construction loan","A reverse mortgage"], a:2, e:"RESPA does not apply to temporary construction loans, while it does apply to refinances, HELOCs, and reverse mortgages."},
+{cat:"RESPA", q:"Under RESPA Section 8, which of the following is a prohibited act?", o:["Properly disclosing an affiliated title company under an AfBA disclosure","Paying a real estate agent a fee for referring borrowers to a particular lender","Charging a bona fide fee for services actually rendered","Paying a loan originator a salary that doesn't vary with loan terms"], a:1, e:"Section 8 prohibits kickbacks and unearned fees for referrals of settlement services; referral fees to agents are a classic violation."},
+{cat:"RESPA", q:"Under RESPA's escrow rules, what is the maximum cushion a lender may require at closing?", o:["One month","Two months","Three months","No cushion is permitted"], a:1, e:"Lenders may require up to a two-month cushion in the escrow account at closing."},
+{cat:"RESPA", q:"If an annual escrow analysis reveals a surplus of more than $50, the servicer must:", o:["Apply it automatically to next year's payments with no notice required","Return the surplus to the borrower within 30 days","Hold it indefinitely as a reserve cushion","Return it only if the borrower requests it in writing"], a:1, e:"Surpluses over $50 must be refunded to the borrower within 30 days of the annual analysis."},
+{cat:"RESPA", q:"A Qualified Written Request (QWR) under RESPA must be acknowledged within how many days, and substantively resolved within how many days?", o:["5 days / 30 days","5 days / 45 days","10 days / 60 days","15 days / 45 days"], a:1, e:"Servicers must acknowledge a QWR within 5 days and resolve it within 45 days."},
+{cat:"RESPA", q:"Under RESPA's servicing rules, a Notice of Default generally cannot be filed to begin foreclosure until the loan is delinquent for at least:", o:["60 days","90 days","120 days","180 days"], a:2, e:"A pre-foreclosure NOD cannot be filed before the loan is 120 days past due."},
+{cat:"RESPA", q:"Before charging a borrower for force-placed insurance, a servicer must first send a warning notice at least how many days in advance?", o:["15 days","30 days","45 days","60 days"], a:2, e:"The first notice is required at least 45 days before charging, followed by a second notice at least 30 days later."},
+{cat:"RESPA", q:"What is the maximum criminal/civil penalty structure for a RESPA Section 8 kickback violation, per the SKaTE mnemonic?", o:["$5,000 and/or 6 months in jail","$10,000 and/or 1 year in jail","$25,000 and/or 2 years in jail","$42,350 per violation"], a:1, e:"Section 8 penalties run up to $10,000 and/or one year in jail per violation."},
+{cat:"RESPA", q:"A seller may NOT require a buyer to use a particular title insurance company unless:", o:["The buyer agrees in writing at closing","The seller pays for the title insurance and all related title charges","The title company is owned by the seller's agent's brokerage","It is disclosed somewhere in the listing agreement"], a:1, e:"This RESPA Section 9 prohibition is waived only when the seller absorbs the title insurance and related costs."},
+{cat:"RESPA", q:"If a seller violates the title insurance steering prohibition under RESPA Section 9, the buyer's available remedy is:", o:["Actual damages only, capped at the title premium", "Treble (3x) damages of all title insurance charges", "A flat statutory penalty of $1,000", "No private remedy exists under RESPA"], a:1, e:"Section 9 entitles the buyer to sue for three times the title insurance charges."},
+{cat:"RESPA", q:"Which RESPA-required disclosure communicates whether the lender intends to service the loan or transfer servicing rights?", o:["The Affiliated Business Arrangement Disclosure","The Mortgage Servicing Disclosure Statement","The Initial Escrow Statement","The Special Information Booklet"], a:1, e:"The Mortgage Servicing Disclosure Statement informs the borrower of the lender's servicing intentions."},
+{cat:"RESPA", q:"An Affiliated Business Arrangement disclosure is required when a referring party's ownership interest in the affiliated entity exceeds:", o:["Any nonzero ownership interest","1%","5%","10%"], a:1, e:"The AfBA threshold is ownership greater than 1% in the affiliated settlement service provider."},
+{cat:"RESPA", q:"AfBA disclosure records must be retained for:", o:["2 years","3 years","5 years","7 years"], a:2, e:"AfBA disclosure documentation must be kept for 5 years."},
+{cat:"RESPA", q:"Under RESPA's loss-mitigation rules, a servicer must attempt to establish contact with a delinquent borrower no later than how many days after a missed payment?", o:["30 days","36 days","45 days","60 days"], a:1, e:"Servicers must attempt live contact by day 36 of delinquency, and mail loss-mitigation information by day 45."},
+{cat:"RESPA", q:"A borrower who has not submitted a complete loss-mitigation application generally cannot have foreclosure commenced against them until the loan is delinquent for at least:", o:["90 days","100 days","120 days","150 days"], a:2, e:"Servicers must wait 120 days of delinquency before filing for foreclosure absent a pending application."},
+{cat:"RESPA", q:"'Dual tracking,' which RESPA's servicing amendments attempt to limit, describes a servicer who:", o:["Services two unrelated loans for the same borrower","Pursues foreclosure at the same time it is evaluating the borrower for a loan workout","Reports the same loan to two credit bureaus","Splits escrow disbursements between two accounts"], a:1, e:"Dual tracking is pursuing foreclosure while simultaneously working a loss-mitigation request — something RESPA's rules restrict."},
+{cat:"RESPA", q:"A complete loss-mitigation application submitted more than how many days before a scheduled foreclosure sale generally must be addressed before the sale proceeds?", o:["7 days","15 days","37 days","90 days"], a:2, e:"Applications received more than 37 days before a scheduled sale must be evaluated before the foreclosure can proceed."},
+{cat:"RESPA", q:"A borrower may request an independent appeal of a servicer's denial of a loan workout if the application was submitted at least how many days before the scheduled foreclosure sale?", o:["30 days","60 days","90 days","120 days"], a:2, e:"A 90-day pre-sale application triggers the right to an independent appeal of a workout denial."},
+{cat:"RESPA", q:"RESPA was enacted in 1974 primarily to:", o:["Regulate the advertising of credit terms","Help consumers shop for settlement services and eliminate kickbacks and unnecessary cost increases","Establish minimum licensing standards for originators","Mandate disclosure of applicant race and ethnicity"], a:1, e:"RESPA's core purpose is consumer protection in the settlement process: cost transparency, prohibiting kickbacks, and limiting escrow abuses."},
+
+{cat:"ECOA, Fair Housing & HMDA", q:"ECOA was enacted in large part because of widespread discrimination against:", o:["Veterans seeking VA loans","Women being denied equal treatment in credit transactions","Rural homebuyers","Elderly borrowers seeking reverse mortgages"], a:1, e:"ECOA's original impetus was the unequal treatment of women in obtaining credit."},
+{cat:"ECOA, Fair Housing & HMDA", q:"Which of the following is NOT one of ECOA's nine prohibited bases for credit discrimination?", o:["Marital status","Receipt of public assistance income","Criminal history","Age (provided the applicant can legally contract)"], a:2, e:"ECOA's prohibited bases are sex, race, color, religion, national origin, marital status, age, public-assistance income, and exercising CCPA rights — criminal history is not on that list."},
+{cat:"ECOA, Fair Housing & HMDA", q:"Under ECOA, when may a creditor ask about an applicant's marital status?", o:["Never, under any circumstances","Only to determine whether the applicant is married, unmarried, or separated","Only when the applicant is self-employed","Only on government-backed loan applications"], a:1, e:"Creditors may classify marital status only as married, unmarried, or separated."},
+{cat:"ECOA, Fair Housing & HMDA", q:"An MLO may legitimately ask an applicant's age for which purpose?", o:["To deny credit to applicants over a certain age","To confirm legal capacity to contract, or eligibility for an age-related program like a HECM","To set the interest rate based on life expectancy","Age may never be asked under any circumstance"], a:1, e:"Age may be used only for legitimate purposes such as confirming contractual capacity or HECM eligibility, never to discriminate."},
+{cat:"ECOA, Fair Housing & HMDA", q:"After receiving a completed application, ECOA requires a creditor to notify the applicant of its credit decision within:", o:["10 days","15 days","30 days","60 days"], a:2, e:"Creditors must notify applicants of approval, denial, or incompleteness within 30 days of a completed application."},
+{cat:"ECOA, Fair Housing & HMDA", q:"If a credit denial is based in part on information in a credit report, the adverse action notice must include:", o:["The applicant's full credit score history","The name, address, and phone number of the consumer reporting agency used","A list of all other applicants who were approved","The lender's internal underwriting matrix"], a:1, e:"The notice must identify the CRA so the applicant can obtain and dispute the report."},
+{cat:"ECOA, Fair Housing & HMDA", q:"If credit is denied based on an appraised value, the applicant has how many days to request a copy of the appraisal, and the lender has how many days to deliver it?", o:["30 days / 10 days","60 days / 15 days","90 days / 30 days","90 days / 45 days"], a:2, e:"The applicant has 90 days to request the appraisal; the lender then has 30 days to deliver it."},
+{cat:"ECOA, Fair Housing & HMDA", q:"ECOA-related disclosures and records must be retained for:", o:["12 months","25 months","36 months","7 years"], a:1, e:"ECOA disclosures must be kept on file for 25 months."},
+{cat:"ECOA, Fair Housing & HMDA", q:"A private civil action alleging an ECOA violation must generally be filed within:", o:["1 year","2 years","3 years","5 years"], a:1, e:"ECOA's statute of limitations for civil actions is 2 years (24 months) from the violation."},
+{cat:"ECOA, Fair Housing & HMDA", q:"What is the maximum civil penalty per violation under ECOA?", o:["$1,000","$5,000","$10,000","$25,000"], a:2, e:"ECOA violations can carry penalties of up to $10,000 per violation."},
+{cat:"ECOA, Fair Housing & HMDA", q:"Which protected class appears under the Fair Housing Act but is NOT one of ECOA's nine prohibited bases?", o:["Religion","Race","Familial status","National origin"], a:2, e:"Familial status (and disability/handicap) are protected under the Fair Housing Act but are not part of ECOA's enumerated list."},
+{cat:"ECOA, Fair Housing & HMDA", q:"'Blockbusting' under the Fair Housing Act refers to:", o:["Refusing to rent to a member of a protected class","Persuading homeowners to sell quickly by suggesting protected-class buyers are entering the neighborhood","Steering buyers toward certain neighborhoods based on protected class","Refusing to make loans within a defined geographic area"], a:1, e:"Blockbusting is panic-selling induced by suggesting demographic change is imminent — distinct from steering or redlining."},
+{cat:"ECOA, Fair Housing & HMDA", q:"A written Fair Housing Act complaint must generally be filed with HUD within:", o:["90 days of the violation","6 months of the violation","1 year of the violation","2 years of the violation"], a:2, e:"Fair Housing complaints to HUD must be filed within one year of the alleged violation."},
+{cat:"ECOA, Fair Housing & HMDA", q:"Which scenario is an exception to Fair Housing Act coverage?", o:["A landlord refusing to rent based on national origin","An owner-occupied dwelling renting rooms within the legal occupancy limit, without using a broker","A lender redlining a minority neighborhood","A brokerage running discriminatory advertising"], a:1, e:"Owner-occupied dwellings of a limited size, rented without a broker, fall under a narrow Fair Housing Act exemption."},
+{cat:"ECOA, Fair Housing & HMDA", q:"HMDA was enacted largely in response to which discriminatory lending practice?", o:["Blockbusting","Predatory subprime lending","Redlining","Loan flipping"], a:2, e:"HMDA's data-collection mandate grew directly out of concern over redlining by mortgage lenders."},
+{cat:"ECOA, Fair Housing & HMDA", q:"HMDA government-monitoring data (race, ethnicity, sex) is collected in which section of the URLA/1003?", o:["Section IV","Section VI","Section IX","Section X"], a:3, e:"Section X of the 1003 is the Government Monitoring section."},
+{cat:"ECOA, Fair Housing & HMDA", q:"If a borrower refuses to provide HMDA monitoring information during a face-to-face interview, the interviewer must:", o:["Deny the application outright","Make a visual observation and record the information based on that observation","Leave the section blank with no further duty","Report the refusal directly to HUD"], a:1, e:"ECOA/HMDA require the interviewer to note the information based on visual observation or surname when the applicant declines to self-report."},
+{cat:"ECOA, Fair Housing & HMDA", q:"Loan Application Register (LAR) reports collected under HMDA must be filed annually by:", o:["January 1","March 1","April 15","December 31"], a:1, e:"LAR data is due to regulators by March 1 each year."},
+{cat:"ECOA, Fair Housing & HMDA", q:"The Community Reinvestment Act, often discussed alongside HMDA, primarily encourages financial institutions to:", o:["Report suspicious financial transactions","Meet the credit needs of their entire community, including low- and moderate-income areas","Verify the identity of new customers","Limit telemarketing calls"], a:1, e:"CRA pushes institutions toward sound lending that serves their whole community, including underserved areas."},
+{cat:"ECOA, Fair Housing & HMDA", q:"Regulation B is the implementing regulation for which federal law?", o:["RESPA","ECOA","HMDA","FCRA"], a:1, e:"Regulation B implements the Equal Credit Opportunity Act."},
+
+{cat:"FCRA, FACTA & GLBA", q:"Under FCRA, most negative credit information (late payments, collections) must generally be removed from a report after:", o:["5 years","7 years","10 years","It never expires"], a:1, e:"FCRA's general reporting limit for adverse information is 7 years."},
+{cat:"FCRA, FACTA & GLBA", q:"A Chapter 7 bankruptcy may remain on a credit report for up to:", o:["7 years","10 years","15 years","Indefinitely"], a:1, e:"Bankruptcies (and other public records) may be reported for up to 10 years."},
+{cat:"FCRA, FACTA & GLBA", q:"Which type of negative item may remain on a credit report indefinitely?", o:["Late payments","Foreclosures","Unpaid federal tax liens","Civil judgments"], a:2, e:"Unpaid federal tax liens are not subject to FCRA's standard reporting time limits."},
+{cat:"FCRA, FACTA & GLBA", q:"Under FCRA, a CRA must investigate a consumer's dispute and correct or delete inaccurate, incomplete, or unverifiable information within:", o:["15 days","30 days","45 days","60 days"], a:1, e:"FCRA gives CRAs 30 days to resolve a consumer dispute."},
+{cat:"FCRA, FACTA & GLBA", q:"What is the minimum length of time a fraud alert must remain in a consumer's file?", o:["90 days","6 months","1 year","7 years"], a:2, e:"A standard fraud alert must remain on file for at least one year."},
+{cat:"FCRA, FACTA & GLBA", q:"If an MLO pulling credit sees a fraud alert on the file, the correct action is to:", o:["Immediately deny the application","Contact the person at the number on file, or take other reasonable steps to verify identity, before proceeding","Ignore the alert unless the borrower mentions it","Report it directly to the FBI before continuing"], a:1, e:"A fraud alert requires reasonable verification steps before proceeding with the loan."},
+{cat:"FCRA, FACTA & GLBA", q:"Under FACTA, a consumer is entitled to one free credit report from each nationwide CRA every:", o:["6 months","12 months","18 months","24 months"], a:1, e:"FACTA guarantees one free annual report from each CRA, available at annualcreditreport.com."},
+{cat:"FCRA, FACTA & GLBA", q:"FACTA's truncation rule prohibits printing more than how many digits of a payment card number on a receipt?", o:["3","4","5","6"], a:2, e:"No more than the last 5 digits of a card number may appear on a printed receipt."},
+{cat:"FCRA, FACTA & GLBA", q:"Under FACTA Section 114, a 'Red Flag' is best defined as:", o:["Any declined credit application","A pattern, practice, or specific activity indicating the possible existence of identity theft","A late mortgage payment","A formal consumer dispute filed with a CRA"], a:1, e:"Red Flags are warning signs of possible identity theft, not simply credit events."},
+{cat:"FCRA, FACTA & GLBA", q:"A person who knowingly and willfully obtains consumer report information under false pretenses can be fined and/or imprisoned for up to:", o:["1 year","2 years","5 years","10 years"], a:1, e:"FCRA sets a penalty of up to 2 years' imprisonment for obtaining information under false pretenses."},
+{cat:"FCRA, FACTA & GLBA", q:"Under GLBA, the term 'customer' (as opposed to 'consumer') refers to someone who:", o:["Has a single, one-time transaction with the institution","Has an ongoing, significant relationship with the institution","Has been denied credit by the institution","Has filed a complaint about the institution"], a:1, e:"A 'customer' has a continuing relationship; a 'consumer' may only transact once."},
+{cat:"FCRA, FACTA & GLBA", q:"Under GLBA, a financial institution must provide its privacy notice to customers:", o:["Only at account opening","Every year for as long as the relationship lasts","Only upon written request","Every five years"], a:1, e:"GLBA requires an annual privacy notice throughout the customer relationship."},
+{cat:"FCRA, FACTA & GLBA", q:"GLBA's pretexting provisions specifically prohibit:", o:["Charging excessive fees for a credit report","Using false pretenses or impersonation to obtain a consumer's personal financial information","Sharing nonpublic data with affiliates after proper disclosure","Marketing financial products by phone"], a:1, e:"Pretexting bans obtaining financial information through false statements or impersonation — the reason security questions exist."},
+{cat:"FCRA, FACTA & GLBA", q:"Which 'SPF' component of GLBA requires a written plan describing how the firm protects consumer data and trains employees?", o:["The Safeguards Rule","The Pretexting Rule","The Financial Privacy Rule","The Disposal Rule"], a:0, e:"The Safeguards Rule requires a written information-security plan."},
+{cat:"FCRA, FACTA & GLBA", q:"FACTA's requirement that businesses shred, burn, or otherwise securely destroy documents containing consumer report information is part of the:", o:["GLBA Safeguards Rule","FACTA Disposal Rule","Red Flags Rule","Regulation P"], a:1, e:"The Disposal Rule under FACTA governs secure destruction of consumer report data."},
+{cat:"FCRA, FACTA & GLBA", q:"Under GLBA, customers have the right to do which of the following regarding sharing of their nonpublic information with non-affiliated third parties?", o:["Demand the institution never collect the information at all","Opt out of certain sharing arrangements","Sue for statutory damages regardless of harm","Force the institution to sever ties with all affiliates"], a:1, e:"GLBA gives customers an opt-out right over certain third-party information sharing, not an absolute veto on collection."},
+{cat:"FCRA, FACTA & GLBA", q:"Regulation V implements which federal consumer protection law?", o:["ECOA","FCRA","RESPA","TILA"], a:1, e:"Regulation V is the implementing regulation for the Fair Credit Reporting Act."},
+{cat:"FCRA, FACTA & GLBA", q:"Regulation P implements which federal requirement?", o:["Privacy of consumer financial information under GLBA","Fair debt collection practices","SAFE Act licensing standards","HMDA data reporting"], a:0, e:"Regulation P implements GLBA's financial privacy requirements."},
+{cat:"FCRA, FACTA & GLBA", q:"Under FCRA, a 'creditor' is defined as a person who:", o:["Only originates FHA-insured loans","Regularly extends consumer credit subject to a finance charge, or payable by written agreement in more than four installments","Services loans on behalf of a GSE","Sells real estate as a licensed broker"], a:1, e:"FCRA's creditor definition turns on regularly extending credit subject to a finance charge or paid in more than four installments."},
+{cat:"FCRA, FACTA & GLBA", q:"The standard range of FICO credit scores is generally:", o:["200-800","300-850","350-900","250-900"], a:1, e:"FICO scores typically range from 300 to 850."},
+
+{cat:"BSA, AML & Patriot Act", q:"The Bank Secrecy Act requires financial institutions to report cash transactions exceeding:", o:["$5,000","$10,000","$15,000","$25,000"], a:1, e:"Currency Transaction Reports are generally required above $10,000 in cash activity."},
+{cat:"BSA, AML & Patriot Act", q:"An MLO must report suspicious activity to FinCEN once the amount involved exceeds:", o:["$2,000","$5,000","$10,000","$25,000"], a:1, e:"MLOs are required to report suspicious activity exceeding $5,000."},
+{cat:"BSA, AML & Patriot Act", q:"A Suspicious Activity Report must generally be filed no later than how many calendar days after initial detection?", o:["15 days","30 days","45 days","60 days"], a:1, e:"SARs are due within 30 calendar days of initial detection of the suspicious activity."},
+{cat:"BSA, AML & Patriot Act", q:"A financial institution must retain a copy of a filed SAR and its supporting documentation for:", o:["1 year","3 years","5 years","7 years"], a:2, e:"SAR records, including supporting documentation, must be kept for 5 years from the filing date."},
+{cat:"BSA, AML & Patriot Act", q:"Disclosing to a customer that a SAR has been filed regarding them is:", o:["Required under BSA","Optional, at the institution's discretion","Illegal","Required only if the customer specifically asks"], a:2, e:"It is illegal to tell a person involved in a transaction that a SAR has been filed about them."},
+{cat:"BSA, AML & Patriot Act", q:"The purpose of the USA PATRIOT Act's Customer Identification Program (CIP) is to:", o:["Verify income and employment for underwriting","Verify a customer's name, address, date of birth, and Social Security number","Determine general creditworthiness","Establish maximum allowable loan-to-value ratios"], a:1, e:"CIP requires verification of basic identifying information to prevent fraud and money laundering."},
+{cat:"BSA, AML & Patriot Act", q:"Which legislation specifically requires financial institutions to maintain anti-money laundering programs?", o:["RESPA","The Bank Secrecy Act / USA PATRIOT Act","TILA","ECOA"], a:1, e:"BSA and its strengthening by the USA PATRIOT Act mandate AML programs at financial institutions."},
+{cat:"BSA, AML & Patriot Act", q:"Under the MARS Rule, a loan-modification negotiator may collect fees:", o:["Upfront, before negotiations begin","Only after a written loan-modification offer has been delivered to and accepted by the consumer","At any time, so long as disclosed in writing","MARS does not regulate the timing of fees"], a:1, e:"Fees may only be collected once a written, accepted modification offer exists."},
+{cat:"BSA, AML & Patriot Act", q:"Which of the following is expressly prohibited under the MARS Rule?", o:["Advising a borrower to continue making payments","Advising a borrower to stop making mortgage payments","Communicating directly with the borrower's lender","Charging a fee after a modification has been accepted"], a:1, e:"MARS negotiators may never advise borrowers to stop paying their mortgage."},
+{cat:"BSA, AML & Patriot Act", q:"Companies must update both their internal do-not-call list and the National DNC Registry every:", o:["15 days","31 days","60 days","90 days"], a:1, e:"Both lists must be checked/updated at least every 31 days."},
+{cat:"BSA, AML & Patriot Act", q:"Records demonstrating compliance with Do Not Call requirements must be maintained for:", o:["6 months","12 months","24 months","36 months"], a:2, e:"DNC compliance documentation must be retained for 24 months."},
+{cat:"BSA, AML & Patriot Act", q:"Under the Established Business Relationship exception to the DNC registry, a company may call a consumer up to how many months after the consumer's last purchase or transaction?", o:["6 months","12 months","18 months","24 months"], a:2, e:"The EBR exception based on a prior purchase/transaction lasts 18 months."},
+{cat:"BSA, AML & Patriot Act", q:"Violators of DNC telemarketing rules can be fined up to approximately:", o:["$11,000 per call","$16,000 per call","$28,474 per call","$42,350 per call"], a:3, e:"DNC violations carry penalties up to roughly $42,350 per call."},
+{cat:"BSA, AML & Patriot Act", q:"Telemarketing calls to consumers may generally only be placed between:", o:["7am-8pm local time","8am-9pm in the consumer's time zone","9am-9pm in the caller's time zone","8am-8pm nationwide standard time"], a:1, e:"Calls are restricted to 8am-9pm in the called consumer's own time zone."},
+{cat:"BSA, AML & Patriot Act", q:"Which entity is exempt from the National Do Not Call Registry's restrictions?", o:["Mortgage brokers","Political organizations and charities","Banks","Credit unions"], a:1, e:"Political organizations, charities, and telephone surveyors are not limited by the National DNC Registry."},
+{cat:"BSA, AML & Patriot Act", q:"The E-SIGN Act provides that electronic signatures and records:", o:["Are only valid for non-mortgage consumer transactions","Cannot be considered invalid solely because they are in electronic form","Require notarization to be enforceable","Are valid only where a state has separately adopted similar legislation"], a:1, e:"E-SIGN's core principle is that electronic form alone does not invalidate a signature or record."},
+{cat:"BSA, AML & Patriot Act", q:"A consumer's electronic-consent disclosure under E-SIGN must address all of the following EXCEPT:", o:["The right to receive paper disclosures","Hardware/software requirements for accessing records","The consumer's right to withdraw consent","The lender's internal underwriting guidelines"], a:3, e:"Internal underwriting standards are not part of the required E-SIGN consent disclosure."},
+{cat:"BSA, AML & Patriot Act", q:"The USA PATRIOT Act's stated purpose includes deterring and punishing terrorism through:", o:["Streamlined mortgage licensing","Enhanced law enforcement tools and strengthened anti-money-laundering provisions","Expanded credit reporting access","Reduced escrow requirements"], a:1, e:"The Act strengthens law enforcement and AML tools to combat terrorism financing."},
+{cat:"BSA, AML & Patriot Act", q:"Which scenario is most likely to be flagged as suspicious activity under a BSA/AML red-flag program?", o:["A borrower with a long, stable credit history applying for a conventional loan","Two different customers using the same or similar identifying information, with different photos","A borrower providing two years of W-2s as documentation","A self-employed borrower providing two years of tax returns"], a:1, e:"Inconsistent identity details across customers is a hallmark red flag of identity-based fraud."},
+{cat:"BSA, AML & Patriot Act", q:"Under the Bank Secrecy Act, a Currency Transaction Report for a reportable cash transaction must generally be filed within how many days of the transaction?", o:["5 days","15 days","30 days","45 days"], a:1, e:"CTRs are generally due within 15 days of the reportable cash transaction."},
+
+{cat:"SAFE Act & Licensing", q:"The SAFE Act was enacted as part of which broader piece of legislation?", o:["The Dodd-Frank Act","The Housing and Economic Recovery Act (HERA) of 2008","The American Recovery and Reinvestment Act","The Gramm-Leach-Bliley Act"], a:1, e:"The SAFE Act originated within HERA, signed in 2008."},
+{cat:"SAFE Act & Licensing", q:"The Nationwide Multistate Licensing System & Registry (NMLS) was created by:", o:["CFPB and HUD","The Conference of State Bank Supervisors and American Association of Residential Mortgage Regulators","Fannie Mae and Freddie Mac","FDIC and OCC"], a:1, e:"CSBS and AARMR jointly created the NMLS."},
+{cat:"SAFE Act & Licensing", q:"Which individual is generally exempt from SAFE Act MLO licensing requirements?", o:["An employee of a non-depository mortgage company who takes applications","An attorney negotiating loan terms as an ancillary, uncompensated part of legal representation","A mortgage broker who negotiates terms for a fee","A loan officer who quotes rates to the public"], a:1, e:"Attorneys providing ancillary, uncompensated loan-term negotiation as part of legal services are exempt."},
+{cat:"SAFE Act & Licensing", q:"Bank employees who originate loans but are exempt from state licensing must still:", o:["Take the 20-hour pre-license course","Register with the NMLS and submit fingerprints and biographical information","Pass the National Exam","Complete 8 hours of annual CE like licensed MLOs"], a:1, e:"Exempt depository-institution employees become 'registered' (not licensed) loan originators via the NMLS, with fingerprinting and background checks."},
+{cat:"SAFE Act & Licensing", q:"The 20-hour SAFE Act pre-licensing course must include a minimum of how many hours on federal law?", o:["2 hours","3 hours","5 hours","8 hours"], a:1, e:"The 20-hour course breaks down into 3 hours federal law, 3 hours ethics, 2 hours nontraditional mortgages, and 12 elective hours."},
+{cat:"SAFE Act & Licensing", q:"Of the 20 required pre-licensing hours, exactly 2 hours must cover:", o:["State law","Nontraditional mortgage products","Ethics","General mortgage knowledge"], a:1, e:"Nontraditional mortgage products get a dedicated 2-hour block in the pre-licensing curriculum."},
+{cat:"SAFE Act & Licensing", q:"A passing score on the National SAFE MLO Test is:", o:["60% or higher","70% or higher","75% or higher","80% or higher"], a:2, e:"Candidates must score 75% or above to pass."},
+{cat:"SAFE Act & Licensing", q:"If a candidate fails the National Test three times, how long must they wait before attempting it again?", o:["30 days","60 days","6 months","1 year"], a:2, e:"After a third failure, candidates must wait 6 months before retesting (versus 30 days after the first two failures)."},
+{cat:"SAFE Act & Licensing", q:"Licensed MLOs must complete a minimum of how many hours of continuing education annually?", o:["4 hours","6 hours","8 hours","12 hours"], a:2, e:"8 hours of annual CE is the standard minimum requirement."},
+{cat:"SAFE Act & Licensing", q:"Of the annual CE requirement, how many hours must specifically cover ethics?", o:["1 hour","2 hours","3 hours","4 hours"], a:1, e:"2 of the 8 annual CE hours must be devoted to ethics."},
+{cat:"SAFE Act & Licensing", q:"The 'Successive Year Rule' for MLO continuing education means an MLO:", o:["Can repeat identical CE coursework every year","Must take different course content each successive year","Only needs CE every other year","Can carry over unused CE hours to next year"], a:1, e:"The Successive Year Rule prevents MLOs from satisfying CE by retaking the exact same course content year after year."},
+{cat:"SAFE Act & Licensing", q:"An MLO who teaches an approved continuing education course earns how many CE credit hours per hour taught?", o:["1 hour","1.5 hours","2 hours","3 hours"], a:2, e:"Teaching CE earns double credit — 2 hours of CE per 1 hour taught."},
+{cat:"SAFE Act & Licensing", q:"If an MLO fails to maintain a valid license for 3 to 5 years or longer, they generally must:", o:["Simply pay a reinstatement fee","Retake the 20-hour pre-licensure course and the National Test","Wait one additional year before reapplying","Face no consequence as long as CE was completed in the interim"], a:1, e:"A lapse of 3-5+ years typically requires retaking pre-licensing education and the exam."},
+{cat:"SAFE Act & Licensing", q:"MLO license renewal generally occurs annually within which window?", o:["Jan 1 - Feb 28","Apr 1 - May 31","Nov 1 - Dec 31","Oct 1 - Nov 30"], a:2, e:"The standard annual renewal window runs November 1 through December 31."},
+{cat:"SAFE Act & Licensing", q:"The maximum civil penalty a state may impose per SAFE Act violation is approximately:", o:["$10,000","$16,000","$28,474","$42,350"], a:2, e:"State regulators can impose civil penalties up to roughly $28,474 per violation."},
+{cat:"SAFE Act & Licensing", q:"Under SAFE Act transitional authority, a qualified MLO moving from a depository institution to a non-bank lender may continue originating loans for up to how many days while completing new state licensing requirements?", o:["60 days","90 days","120 days","180 days"], a:2, e:"Transitional authority allows up to 120 days of continued origination while completing licensure."},
+{cat:"SAFE Act & Licensing", q:"Which of the following does NOT constitute 'taking a residential mortgage loan application' under the SAFE Act?", o:["Explaining the contents of an application without discussing particular loan terms", "Advising a consumer on specific loan terms and rates", "Collecting financial information from a consumer to determine loan eligibility", "Negotiating loan terms for compensation"], a:0, e:"Merely explaining the application's contents, without discussing specific loan products, does not count as taking an application."},
+{cat:"SAFE Act & Licensing", q:"On the National SAFE MLO Test content outline, which subject area carries the largest weighting?", o:["Ethics","Uniform State Content","Mortgage Loan Origination Activities","General Mortgage Knowledge"], a:2, e:"Loan Origination Activities is weighted highest (around 25%), ahead of Federal Law, General Knowledge, Ethics, and State Content."},
+{cat:"SAFE Act & Licensing", q:"The MU4 Form is used to:", o:["Register a company as a mortgage lender","Apply for an individual MLO license or registration","Report HMDA data","File a Suspicious Activity Report"], a:1, e:"The MU4 is the Uniform Individual Mortgage License/Registration & Consent Form."},
+{cat:"SAFE Act & Licensing", q:"Consumers can verify an MLO's license status, employment history, and public disciplinary record through which free tool?", o:["NMLS Consumer Access","The CFPB complaint portal","annualcreditreport.com","FinCEN's public registry"], a:0, e:"NMLS Consumer Access is the SAFE Act-mandated public tool for checking an MLO's licensing and enforcement history."},
+
+{cat:"FHA, VA, USDA & Conventional", q:"An FHA borrower may qualify for the 3.5% minimum down payment with a credit score of at least:", o:["500","580","620","640"], a:1, e:"A 580 credit score unlocks the standard 3.5% down payment; lower scores require a larger down payment."},
+{cat:"FHA, VA, USDA & Conventional", q:"On an FHA loan, the entire required down payment may come from:", o:["Only the borrower's own funds","A gift from an eligible donor","A second mortgage from the seller","Sweat equity credits only"], a:1, e:"FHA uniquely allows the full down payment to be gifted."},
+{cat:"FHA, VA, USDA & Conventional", q:"FHA loans generally use which qualifying debt ratios?", o:["28/36","29/41","31/43","31/41"], a:2, e:"FHA's standard front-end/back-end ratios are 31/43."},
+{cat:"FHA, VA, USDA & Conventional", q:"The maximum allowable seller concession on an FHA loan is:", o:["3%","4%","6%","9%"], a:2, e:"FHA allows seller concessions up to 6% of the sale price."},
+{cat:"FHA, VA, USDA & Conventional", q:"FHA's Upfront Mortgage Insurance Premium (UFMIP) is currently:", o:["0.85% of the loan amount","1.75% of the loan amount","2.25% of the loan amount","3.5% of the loan amount"], a:1, e:"UFMIP is 1.75% of the base loan amount and may be financed into the loan."},
+{cat:"FHA, VA, USDA & Conventional", q:"For loans originated after January 1, 2001, FHA monthly MIP automatically cancels once LTV reaches what percentage of original value (on a 30-year loan paid for at least 5 years)?", o:["80%","78%","75%","90%"], a:1, e:"Monthly MIP auto-cancels at 78% LTV under these conditions."},
+{cat:"FHA, VA, USDA & Conventional", q:"If FHA monthly MIP is financed into the loan rather than paid out-of-pocket, that financed MIP:", o:["Can be cancelled once LTV reaches 78%","Cannot be cancelled","Is refundable at closing","Is automatically waived"], a:1, e:"Financed MIP is not eligible for the standard 78%-LTV cancellation."},
+{cat:"FHA, VA, USDA & Conventional", q:"Which system does an FHA underwriter use to verify that a borrower has not defaulted on federal debt, which would disqualify them?", o:["Automated Underwriting System (AUS)","Credit Alert Verification Reporting System (CAVRS)","Desktop Underwriter","TOTAL Scorecard"], a:1, e:"CAVRS specifically flags federal debt defaults that disqualify an FHA applicant."},
+{cat:"FHA, VA, USDA & Conventional", q:"The maximum late charge permitted on an FHA loan, after the 15th of the month, is:", o:["2% of P&I","4% of P&I","5% of P&I","6% of P&I"], a:1, e:"FHA caps late fees at 4% of the principal and interest payment."},
+{cat:"FHA, VA, USDA & Conventional", q:"Transferring an existing FHA loan to a new buyer, subject to lender and HUD approval, is referred to as an assumption, also known as:", o:["Novation","Subordination","Recasting","Origination"], a:0, e:"FHA assumptions involving lender/HUD approval are also called novation."},
+{cat:"FHA, VA, USDA & Conventional", q:"A VA loan's maximum guaranty is what percentage of the purchase price or value?", o:["20%","25%","30%","50%"], a:1, e:"The VA guarantees up to 25% of the loan amount, subject to county limits."},
+{cat:"FHA, VA, USDA & Conventional", q:"VA loans generally use which back-end qualifying debt ratio?", o:["36%","41%","43%","45%"], a:1, e:"VA's back-end ratio guideline is 41%, with no fixed front-end ratio (NA/41)."},
+{cat:"FHA, VA, USDA & Conventional", q:"The VA funding fee is typically waived for:", o:["First-time homebuyers","Veterans with service-connected disabilities or surviving spouses","Borrowers with credit scores above 740","Loans under $100,000"], a:1, e:"Disabled veterans and qualifying surviving spouses are exempt from the VA funding fee."},
+{cat:"FHA, VA, USDA & Conventional", q:"The VA appraisal document establishing the maximum usable value/loan amount is the:", o:["Certificate of Eligibility (COE)","Certificate or Notice of Reasonable Value","Loan Estimate","Notice of Value Adjustment"], a:1, e:"The CRV/NOV sets the value the lender must use for VA financing."},
+{cat:"FHA, VA, USDA & Conventional", q:"Two co-borrowing eligible veterans on a VA loan may:", o:["Never combine entitlement under any circumstance","Combine their VA entitlement to qualify for a larger loan amount","Only use one veteran's entitlement at a time","Combine entitlement only if married to each other"], a:1, e:"Eligible veterans may pool entitlement together for a larger guaranteed loan."},
+{cat:"FHA, VA, USDA & Conventional", q:"VA borrowers must generally occupy the property within how many days of closing, intending to occupy for at least how long?", o:["30 days / 6 months","60 days / 1 year","90 days / 2 years","60 days / 6 months"], a:1, e:"Occupancy within 60 days and an intent to occupy for at least one year are standard VA requirements."},
+{cat:"FHA, VA, USDA & Conventional", q:"USDA loan eligibility extends to rural areas that can include small towns with populations up to approximately:", o:["10,000","20,000","35,000","50,000"], a:2, e:"USDA's 'rural' definition can extend to towns of up to roughly 35,000 residents."},
+{cat:"FHA, VA, USDA & Conventional", q:"USDA loans generally use which qualifying debt ratios?", o:["28/36","29/41","31/43","33/45"], a:1, e:"USDA's standard ratios are 29/41."},
+{cat:"FHA, VA, USDA & Conventional", q:"USDA loan applicants' household income generally cannot exceed what percentage of the area median income (AMI)?", o:["80%","100%","115%","125%"], a:2, e:"USDA caps eligibility at 115% of the area median income."},
+{cat:"FHA, VA, USDA & Conventional", q:"Conventional loans typically use which qualifying debt ratios?", o:["28/36","29/41","31/43","33/45"], a:0, e:"Conventional underwriting commonly applies 28/36 ratios."},
+
+{cat:"ARMs & Loan Products", q:"The 'fully indexed rate' on an adjustable-rate mortgage is calculated as:", o:["Index minus margin","Index plus margin","Margin alone","Index alone"], a:1, e:"Fully indexed rate = index + margin."},
+{cat:"ARMs & Loan Products", q:"A 'teaser rate' on an ARM is best described as:", o:["The fully indexed rate at closing","An introductory rate set lower than the fully indexed rate at closing","The lifetime cap","The periodic adjustment cap"], a:1, e:"When the introductory rate undercuts the fully indexed rate at closing, it's called a teaser rate."},
+{cat:"ARMs & Loan Products", q:"On an ARM advertised with caps written as '2/2/6,' the first number represents:", o:["The periodic adjustment cap","The lifetime cap","The initial adjustment cap","The margin"], a:2, e:"In a three-number cap structure, the first figure is the initial cap, applying only to the first adjustment."},
+{cat:"ARMs & Loan Products", q:"The margin on an ARM is best described as:", o:["A variable figure that moves with the market index","A fixed amount reflecting the lender's cost of funds and profit, disclosed on the LE","The maximum allowable annual rate increase","An adjustment tied to the borrower's credit score"], a:1, e:"The margin stays fixed for the life of the loan; only the index component moves."},
+{cat:"ARMs & Loan Products", q:"Which of the following is a commonly used ARM index?", o:["FICO score","Constant Maturity Treasury (CMT)","Debt-to-income ratio","Loan-to-value ratio"], a:1, e:"CMT, COFI, and the Prime Rate are examples of market-driven ARM indices; the others are underwriting metrics, not indices."},
+{cat:"ARMs & Loan Products", q:"An ARM letting the borrower pick among several monthly payment options, including a minimum payment that can cause negative amortization, is known as:", o:["A Hybrid ARM","An Option ARM","A Convertible ARM","An Interest-Only ARM"], a:1, e:"Option ARMs offer multiple payment choices, including a minimum that may not cover accrued interest."},
+{cat:"ARMs & Loan Products", q:"A 'Convertible ARM' permits the borrower to:", o:["Switch lenders penalty-free at any time","Convert from adjustable to fixed (current prevailing rate) without a full refinance, sometimes for a one-time fee","Convert the loan into a HELOC","Skip payments without penalty"], a:1, e:"Convertible ARMs let borrowers lock into a fixed rate without going through a refinance."},
+{cat:"ARMs & Loan Products", q:"In a '3/1 Hybrid ARM,' the numbers indicate:", o:["A 3% initial cap and a 1% lifetime cap","A rate fixed for 3 years, then adjusting every 1 year","A 3% margin and a 1% periodic cap","A 3-year term with a 1-year grace period"], a:1, e:"The first number is the fixed-rate period; the second is the adjustment frequency afterward."},
+{cat:"ARMs & Loan Products", q:"'Recasting' on an Option ARM refers to:", o:["Refinancing into a new fixed-rate loan","Periodically adjusting payments (often every 5 years) to restore a fully amortizing schedule","Reducing the loan principal balance","Extending the loan's term"], a:1, e:"Recasting resets the payment so the loan amortizes fully over the remaining term."},
+{cat:"ARMs & Loan Products", q:"A 'rate floor' on an ARM:", o:["Protects the borrower by capping the maximum rate","Protects the lender by setting the lowest rate the loan may adjust to, usually equal to the margin","Is identical to the lifetime cap","Does not exist on ARM products"], a:1, e:"The floor is the minimum rate, typically set at the margin, and primarily benefits the lender."},
+{cat:"ARMs & Loan Products", q:"An interest-only mortgage requires the borrower to:", o:["Pay only principal for a defined period","Pay only interest for a defined period, with principal due afterward","Skip payments entirely for the first year","Make payments biweekly only"], a:1, e:"Interest-only loans defer principal payments for a set introductory period."},
+{cat:"ARMs & Loan Products", q:"A balloon mortgage is best described as a:", o:["Fully amortizing loan","Partially amortizing loan with a large lump-sum payment due at the end of the term","Loan with no interest charged","Loan whose principal increases over time"], a:1, e:"Balloon loans amortize only partially, leaving a large final payment due."},
+{cat:"ARMs & Loan Products", q:"A bi-weekly mortgage payment schedule effectively results in how many extra full monthly-equivalent payments per year, compared to standard monthly payments?", o:["0","1","2","3"], a:1, e:"26 bi-weekly half-payments equal 13 monthly payments, one more than the usual 12."},
+{cat:"ARMs & Loan Products", q:"A Home Equity Conversion Mortgage (reverse mortgage) is generally available to homeowners aged:", o:["55 and older","59½ and older","62 and older","65 and older"], a:2, e:"HECMs require borrowers to be at least 62 years old."},
+{cat:"ARMs & Loan Products", q:"A reverse mortgage becomes due and payable when:", o:["The borrower refinances unrelated debt","The borrower moves out of the home for 12 consecutive months","The home's value rises significantly","The borrower receives a pay raise"], a:1, e:"A 12-month absence from the home (among other triggers like death or sale) calls the reverse mortgage due."},
+{cat:"ARMs & Loan Products", q:"The amount a borrower may receive under a HECM is primarily driven by:", o:["The borrower's credit score","The age of the youngest borrower (among other factors)","The borrower's income","The borrower's employment history"], a:1, e:"HECM proceeds scale with the age of the youngest borrower on title."},
+{cat:"ARMs & Loan Products", q:"A 'package mortgage' includes which of the following within the financed purchase price?", o:["Two unrelated properties","Personal property and furniture along with the real estate","A seller-provided second mortgage","An interest rate buydown"], a:1, e:"Package mortgages finance personal property bundled with the home itself."},
+{cat:"ARMs & Loan Products", q:"A 'blanket mortgage' is used to:", o:["Finance the purchase of more than one piece of property under a single loan","Cover only the down payment portion of a purchase","Provide short-term bridge financing","Refinance an existing HELOC"], a:0, e:"Blanket mortgages bundle multiple properties under one loan, common in subdivision development."},
+{cat:"ARMs & Loan Products", q:"Discount points (buydowns) are always calculated as a percentage of:", o:["The appraised value","The loan amount","The purchase price","The borrower's credit score"], a:1, e:"Discount points and origination points are both calculated against the loan amount, regardless of purchase price or appraisal."},
+{cat:"ARMs & Loan Products", q:"An Equity Participation (Shared Appreciation) Mortgage allows the lender to:", o:["Earn only a fixed interest rate","Share in a portion of the property's income or resale proceeds","Take immediate ownership of the property","Waive all interest charges"], a:1, e:"SAMs give the lender a stake in future appreciation or income, beyond fixed interest."},
+
+{cat:"Calculations & Ratios", q:"A borrower is paid $4,800 biweekly. What is the approximate monthly gross income used for qualifying?", o:["$9,600","$10,400","$11,200","$12,480"], a:1, e:"$4,800 x 26 ÷ 12 = $10,400 per month."},
+{cat:"Calculations & Ratios", q:"A borrower is paid $2,200 semi-monthly (twice per month). What is the annual income?", o:["$26,400","$44,000","$52,800","$57,200"], a:2, e:"Semi-monthly pay is multiplied by 24 (not 26): $2,200 x 24 = $52,800."},
+{cat:"Calculations & Ratios", q:"A $300,000 loan carries a 6% interest rate. What is the approximate monthly interest-only payment?", o:["$1,000","$1,250","$1,500","$1,800"], a:2, e:"$300,000 x 0.06 ÷ 12 = $1,500."},
+{cat:"Calculations & Ratios", q:"A property is purchased for $250,000 and appraises for $260,000. The first loan amount is $200,000. What is the LTV?", o:["76.9%","80%","83.3%","96.2%"], a:1, e:"LTV uses the LESSER of sale price or appraisal ($250,000): $200,000 ÷ $250,000 = 80%."},
+{cat:"Calculations & Ratios", q:"Using a $250,000 purchase price (lesser value), a $200,000 first loan, and a HELOC with a $30,000 maximum available balance, what is the CLTV?", o:["84.6%","88.5%","92%","96%"], a:2, e:"($200,000 + $30,000) ÷ $250,000 = 92%."},
+{cat:"Calculations & Ratios", q:"A borrower's gross monthly income is $6,000. Under a 28% front-end ratio, what is the maximum allowable PITI?", o:["$1,440","$1,680","$1,800","$2,160"], a:1, e:"$6,000 x 0.28 = $1,680."},
+{cat:"Calculations & Ratios", q:"A borrower has $6,000 gross monthly income and $500 in monthly debts. Under a 36% back-end ratio, what is the maximum allowable PITI?", o:["$1,500","$1,660","$1,800","$2,160"], a:1, e:"($6,000 x 0.36) - $500 = $2,160 - $500 = $1,660."},
+{cat:"Calculations & Ratios", q:"Using the prior two results — a front-end max PITI of $1,680 and a back-end max PITI of $1,660 — what figure should the underwriter use as the maximum qualifying PITI?", o:["$1,680 (the higher figure)","$1,660 (the lower figure)","The average of the two, $1,670","Neither — recalculate using FHA ratios instead"], a:1, e:"The borrower must qualify under BOTH ratios, so the lower of the two figures governs."},
+{cat:"Calculations & Ratios", q:"A $180,000 loan closes with 2 discount points and 1 origination point (3 points total). What is the total dollar cost of those points?", o:["$1,800","$3,600","$5,400","$7,200"], a:2, e:"$180,000 x 0.03 = $5,400."},
+{cat:"Calculations & Ratios", q:"A loan closes on March 10. Using the standard convention of collecting per-diem interest through the end of the closing month, for how many days (inclusive) must per-diem interest be collected?", o:["20 days","21 days","22 days","28 days"], a:2, e:"March 10 through March 31 inclusive = 22 days."},
+{cat:"Calculations & Ratios", q:"A loan amount of $240,000 carries a 5% rate. Using a 360-day year, what is the approximate per-diem interest?", o:["$20.00","$26.67","$33.33","$40.00"], a:2, e:"($240,000 x 0.05) ÷ 360 = $33.33 per day."},
+{cat:"Calculations & Ratios", q:"A loan closes on January 20. When is the borrower's first monthly mortgage payment typically due?", o:["February 1","February 20","March 1","March 20"], a:2, e:"The first payment is due on the first of the second month after closing — for a January closing, that's March 1."},
+{cat:"Calculations & Ratios", q:"An applicant earns a $25/hour base rate and works 40 hours/week for 52 weeks. What is the approximate monthly qualifying income?", o:["$3,800","$4,000","$4,333","$4,800"], a:2, e:"$25 x 40 = $1,000/week x 52 = $52,000/year ÷ 12 = $4,333."},
+{cat:"Calculations & Ratios", q:"A borrower has a $4,000 revolving credit card balance, and the credit report shows no minimum payment listed. What monthly amount should the underwriter use for the DTI calculation?", o:["$40","$100","$200","$400"], a:2, e:"Absent a stated minimum, underwriters use 5% of the unpaid balance: $4,000 x 0.05 = $200."},
+{cat:"Calculations & Ratios", q:"A borrower has an auto loan with 8 payments remaining at $350/month. For DTI purposes, this debt should be:", o:["Included in full because it's an installment loan","Excluded because fewer than 10 payments remain","Averaged over the remaining term","Counted at half its monthly value"], a:1, e:"Installment debts with fewer than 10 remaining payments may be excluded from qualifying ratios (auto leases are the exception and always count)."},
+{cat:"Calculations & Ratios", q:"A self-employed borrower's Year 1 net income was $72,000 and Year 2 was $84,000. What is the average monthly qualifying income?", o:["$6,000","$6,500","$6,800","$7,800"], a:1, e:"($72,000 + $84,000) ÷ 24 months = $6,500."},
+{cat:"Calculations & Ratios", q:"A rental property generates $2,000/month in gross rent, with PITI of $1,200/month. Using the standard underwriting formula, what is the net rental income used for qualifying?", o:["$500","$600","$700","$800"], a:1, e:"(Gross rent - PITI) x 75% = ($2,000 - $1,200) x 0.75 = $600."},
+{cat:"Calculations & Ratios", q:"A borrower receives $2,000/month in non-taxed Social Security income. By what percentage may this be 'grossed up' for qualifying purposes?", o:["15%","20%","25%","35%"], a:2, e:"Non-taxable income such as Social Security or disability is commonly grossed up by 25%."},
+{cat:"Calculations & Ratios", q:"A $400,000 loan carries a 0.6% annual PMI rate. What is the approximate monthly PMI payment?", o:["$150","$175","$200","$240"], a:2, e:"($400,000 x 0.006) ÷ 12 = $200."},
+{cat:"Calculations & Ratios", q:"Under HOEPA's points-and-fees coverage test, a first-lien jumbo loan (over $510,400) triggers high-cost status if points and fees exceed what percentage?", o:["1.5%","2.5%","3.5%","5%"], a:1, e:"First-lien jumbo loans use a 2.5% points-and-fees threshold, distinct from the standard 1.5% first-lien and 3.5% subordinate-lien thresholds."},
+
+{cat:"Process, Fraud & Ethics", q:"Pre-qualification differs from pre-approval primarily in that pre-qualification:", o:["Involves a binding credit decision","Requires full third-party verification of credit and income","Is a lightweight assessment performed without third-party verification","Can only be performed by an underwriter"], a:2, e:"Pre-qualification is an at-a-glance estimate; pre-approval involves pulling credit and verifying figures."},
+{cat:"Process, Fraud & Ethics", q:"Which IRS form is used to obtain a transcript of a borrower's filed tax returns directly from the IRS?", o:["Form 4506-T","Form 8821","Form W-9","Form 1098"], a:0, e:"Form 4506-T requests a tax transcript; Form 8821 authorizes release of tax information to a third party."},
+{cat:"Process, Fraud & Ethics", q:"The '5 C's of underwriting' include Credit, Capacity, Cash, Collateral, and:", o:["Compliance","Character","Closing","Calculation"], a:1, e:"Character (willingness to repay) rounds out the 5 C's alongside Credit, Capacity, Cash, and Collateral."},
+{cat:"Process, Fraud & Ethics", q:"The Uniform Residential Appraisal Report is also identified by which Fannie Mae form number?", o:["1003","1004","1008","4506-T"], a:1, e:"Form 1004 is the standard appraisal report form, as distinct from the 1003 loan application."},
+{cat:"Process, Fraud & Ethics", q:"The 'Sales Comparison Approach' to appraisal is also known as the:", o:["Cost Approach","Income Approach","Market Data Approach","Capitalization Approach"], a:2, e:"Sales Comparison is interchangeably called the Market Data Approach."},
+{cat:"Process, Fraud & Ethics", q:"The Cost Approach to appraisal is most appropriate for:", o:["Standard single-family resale homes","New construction or special-purpose properties","Income-producing rental properties","Vacant land in an established subdivision"], a:1, e:"The Cost Approach suits new construction and unique-purpose buildings lacking good comparables."},
+{cat:"Process, Fraud & Ethics", q:"A Fannie Mae residential appraisal generally requires the appraiser's value opinion to be developed from at least how many comparable sales closed within the past year?", o:["1","2","3","5"], a:2, e:"Fannie Mae standards call for a minimum of three closed comparable sales."},
+{cat:"Process, Fraud & Ethics", q:"Which of the following is a prohibited practice regarding appraiser independence?", o:["Asking the appraiser to correct a factual error","Telling the appraiser the minimum value needed for the loan to close","Obtaining a second appraisal and selecting the more reliable one","Asking the appraiser to consider additional comparable data"], a:1, e:"Pressuring an appraiser toward a predetermined value is a clear violation of appraiser independence rules."},
+{cat:"Process, Fraud & Ethics", q:"A residential appraisal is generally valid for 6 months, but must be re-certified if, at the time of closing, the appraisal will already be how many months old or more?", o:["2 months","3 months","4 months","5 months"], a:2, e:"An appraisal 4 months old or older at closing requires re-certification, even within its 6-month overall validity window."},
+{cat:"Process, Fraud & Ethics", q:"A 'straw buyer' or 'nominee borrower' mortgage fraud scheme involves:", o:["Inflating a property's appraised value","Using a friend or family member's name and credit to obtain a loan for someone else's benefit","Forging the seller's signature on a deed","Selling the same mortgage to two different investors"], a:1, e:"Straw buyer schemes substitute a cooperative party's identity and credit for the true beneficiary of the loan."},
+{cat:"Process, Fraud & Ethics", q:"FHA's requirement that appraisers investigate a property's transfer history for the last 3 years is aimed at curbing:", o:["Asset rental fraud","Illegal property flipping","Occupancy fraud","Equity skimming"], a:1, e:"This look-back rule specifically targets illegal flipping schemes involving artificially inflated resale prices."},
+{cat:"Process, Fraud & Ethics", q:"'Equity skimming' fraud involves:", o:["A borrower exaggerating their stated assets","A lender knowingly originating loans the borrower can't afford, setting them up for foreclosure and loss of home equity","A borrower forging a property deed","An appraiser overstating a property's value"], a:1, e:"Equity skimming targets vulnerable borrowers who ultimately lose both the home and their equity."},
+{cat:"Process, Fraud & Ethics", q:"The legal distinction between 'actual fraud' and 'constructive fraud' is that:", o:["Actual fraud always carries higher statutory penalties in every case","Actual fraud is intentional; constructive fraud is negligent misrepresentation or concealment","Constructive fraud applies only to licensed appraisers","The two terms are interchangeable with no legal distinction"], a:1, e:"Actual fraud requires intent; constructive fraud can arise from negligence alone."},
+{cat:"Process, Fraud & Ethics", q:"Falsifying loan documents or willfully overvaluing property in connection with a mortgage transaction can result in federal penalties of up to:", o:["$250,000 and/or 10 years in prison","$500,000 and/or 20 years in prison","$1,000,000 and/or 30 years in prison","There is no specific federal penalty for this conduct"], a:2, e:"Federal mortgage fraud statutes carry penalties of up to $1,000,000 and/or 30 years' imprisonment."},
+{cat:"Process, Fraud & Ethics", q:"A 'silent second' mortgage fraud scheme involves:", o:["A borrower taking two undisclosed loans from different lenders","Seller-provided down payment financing that is not disclosed to the primary lender","A second mortgage carrying no stated interest rate","An undisclosed mechanic's lien placed by a contractor"], a:1, e:"In a silent second, the seller secretly finances the down payment, hiding it from the primary lender."},
+{cat:"Process, Fraud & Ethics", q:"A Deed of Trust (Trust Deed), common on the West Coast, differs from a traditional mortgage in that:", o:["The lender directly seizes the property without involving any third party","A trustee holds legal title and may pursue non-judicial foreclosure once the borrower defaults","It cannot be used for owner-occupied properties","No promissory note is involved"], a:1, e:"Trust deeds place a disinterested trustee in the foreclosure process, enabling faster non-judicial foreclosure."},
+{cat:"Process, Fraud & Ethics", q:"Under a traditional mortgage instrument (East Coast practice), a defaulting borrower is generally foreclosed upon through:", o:["Non-judicial means only","A judicial foreclosure action","Direct seizure without any court involvement","Mandatory arbitration only"], a:1, e:"Mortgages (as opposed to deeds of trust) typically require judicial foreclosure."},
+{cat:"Process, Fraud & Ethics", q:"An 'alienation clause' in a mortgage instrument:", o:["Permanently bars the borrower from ever selling the property","Allows the lender to call the loan due upon sale or transfer of the property (a due-on-sale clause)","Limits when the lender may initiate foreclosure","Requires the borrower to waive their right of rescission"], a:1, e:"Alienation clauses are due-on-sale provisions triggered by an unapproved transfer of ownership."},
+{cat:"Process, Fraud & Ethics", q:"If a borrower conceals material facts on a loan application without the MLO's knowledge, this still generally constitutes:", o:["A purely civil matter with no criminal exposure","Mortgage fraud","A minor disclosure technicality","Acceptable practice if corrected before closing"], a:1, e:"Concealing, adjusting, or withholding material facts that affect an application is mortgage fraud, regardless of who initiated it."},
+{cat:"Process, Fraud & Ethics", q:"When a self-employed borrower's two years of documentation show a declining income trend, the MLO's ethical obligation is best described as:", o:["Average the two years regardless of trend and move on without further inquiry","Accurately represent the trend to the underwriter rather than concealing or minimizing the decline","Omit the lower-income year if it benefits the borrower's qualification","Defer entirely to the underwriter, since MLOs bear no responsibility for income representation"], a:1, e:"MLOs must accurately and honestly present financial information to underwriting, not selectively shape it to help an application succeed."}
+];
+
+/* =================== STATE & LOGIC =================== */
+const CATS = [...new Set(DATA.map(d=>d.cat))];
+let state = { screen:'landing' };
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+function buildRun(list){
+  return shuffle(list).map((item, idx)=>{
+    const order = shuffle([0,1,2,3]);
+    return {
+      cat:item.cat, q:item.q, exp:item.e,
+      opts: order.map(i=>item.o[i]),
+      correct: order.indexOf(item.a),
+      selected:null, submitted:false
+    };
+  });
+}
+
+function startFull(){
+  state = { screen:'quiz', label:'Full National File', list: buildRun(DATA), i:0 };
+  render();
+}
+function startDrill(){
+  const pool = shuffle(DATA).slice(0,25);
+  state = { screen:'quiz', label:'Quick Drill', list: buildRun(pool), i:0 };
+  render();
+}
+function startCategory(cat){
+  const pool = DATA.filter(d=>d.cat===cat);
+  state = { screen:'quiz', label:cat, list: buildRun(pool), i:0 };
+  render();
+}
+function retake(){
+  if(state.label==='Full National File') startFull();
+  else if(state.label==='Quick Drill') startDrill();
+  else startCategory(state.label);
+}
+function goLanding(){ state = { screen:'landing' }; render(); }
+
+function selectOption(idx){
+  const cur = state.list[state.i];
+  if(cur.submitted) return;
+  cur.selected = idx;
+  render();
+}
+function submitAnswer(){
+  const cur = state.list[state.i];
+  if(cur.selected===null) return;
+  cur.submitted = true;
+  render();
+}
+function nextQuestion(){
+  state.i++;
+  render();
+}
+function tally(){
+  let ok=0, no=0;
+  state.list.forEach((q,idx)=>{ if(idx<=state.i && q.submitted){ if(q.selected===q.correct) ok++; else no++; } });
+  return {ok,no};
+}
+
+function escapeHtml(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function render(){
+  const app = document.getElementById('app');
+  if(state.screen==='landing'){ app.innerHTML = landingHTML(); attachLandingEvents(); return; }
+  if(state.screen==='quiz'){
+    if(state.i >= state.list.length){ state.screen='results'; app.innerHTML = resultsHTML(); attachResultsEvents(); return; }
+    app.innerHTML = quizHTML(); attachQuizEvents(); return;
+  }
+  if(state.screen==='results'){ app.innerHTML = resultsHTML(); attachResultsEvents(); return; }
+}
+
+function landingHTML(){
+  const catCards = CATS.map(c=>{
+    const count = DATA.filter(d=>d.cat===c).length;
+    return `<button class="cat-chip" data-cat="${escapeHtml(c)}">
+      <div class="name">${escapeHtml(c)}</div>
+      <div class="count">${count} QUESTIONS</div>
+    </button>`;
+  }).join('');
+
+  return `
+  <div class="header-row">
+    <div class="seal">SAFE<br>MLO</div>
+    <div>
+      <div class="eyebrow">NMLS National Test Component &middot; Practice File</div>
+      <h1>The Underwriter's Drill</h1>
+    </div>
+  </div>
+  <p class="subtitle">200 case files spanning ten categories of federal mortgage law, loan products, and underwriting math &mdash; calibrated to be genuinely difficult. Every answer gets a ruling, same as the desk you're studying for.</p>
+
+  <div class="modes">
+    <button class="mode-card" id="btn-full">
+      <div><div class="mode-title">Full National File</div><div class="mode-desc">All 200 questions, fully shuffled &mdash; the complete simulated exam, start to finish.</div></div>
+      <div class="mode-tag">200 Qs</div>
+    </button>
+    <button class="mode-card" id="btn-drill">
+      <div><div class="mode-title">Quick Drill</div><div class="mode-desc">A short docket of 25 questions pulled at random across all categories.</div></div>
+      <div class="mode-tag">25 Qs</div>
+    </button>
+  </div>
+
+  <h3 style="margin-top:30px; font-size:18px;">Practice by Category</h3>
+  <p class="subtitle" style="margin-top:6px;">Drill one area of law or one loan program until it sticks.</p>
+  <div class="cat-grid">${catCards}</div>
+
+  <footer class="note">Passing line set at 75%, matching the National Test standard. Options are reshuffled on every attempt &mdash; the correct letter won't repeat in the same spot twice.</footer>
+  `;
+}
+function attachLandingEvents(){
+  document.getElementById('btn-full').onclick = startFull;
+  document.getElementById('btn-drill').onclick = startDrill;
+  document.querySelectorAll('.cat-chip').forEach(b=>{
+    b.onclick = ()=>startCategory(b.getAttribute('data-cat'));
+  });
+}
+
+function quizHTML(){
+  const cur = state.list[state.i];
+  const total = state.list.length;
+  const t = tally();
+  const letters = ['A','B','C','D'];
+  const pct = Math.round((state.i)/total*100);
+
+  const opts = cur.opts.map((optText, idx)=>{
+    let cls = 'opt';
+    if(cur.submitted){
+      cls += ' locked';
+      if(idx===cur.correct) cls += ' correct-answer';
+      else if(idx===cur.selected) cls += ' wrong-answer';
+    } else if(cur.selected===idx){
+      cls += ' selected';
+    }
+    return `<button class="${cls}" data-idx="${idx}" ${cur.submitted?'disabled':''}>
+      <span class="letter">${letters[idx]}</span><span>${escapeHtml(optText)}</span>
+    </button>`;
+  }).join('');
+
+  let stampHTML = '';
+  let rulingHTML = '';
+  if(cur.submitted){
+    const isCorrect = cur.selected===cur.correct;
+    stampHTML = `<div class="stamp ${isCorrect?'approve':'deny'}">${isCorrect?'Approved':'Denied'}</div>`;
+    rulingHTML = `<div class="ruling-wrap">${stampHTML}<div class="ruling"><span class="label">Ruling</span>${escapeHtml(cur.exp)}</div></div>`;
+  }
+
+  return `
+  <button class="back-link" id="btn-back">&larr; Leave this file</button>
+  <div class="file-bar">
+    <span class="file-no">FILE NO. ${String(state.i+1).padStart(3,'0')} / ${String(total).padStart(3,'0')} &middot; ${escapeHtml(state.label)}</span>
+    <span class="tally">SCORE <span class="ok">${t.ok} correct</span><span class="no">${t.no} incorrect</span></span>
+  </div>
+  <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+
+  <div class="card">
+    <span class="cat-tag">${escapeHtml(cur.cat)}</span>
+    <div class="qtext">${escapeHtml(cur.q)}</div>
+    <div class="options">${opts}</div>
+    <div class="actions">
+      ${cur.submitted
+        ? `<button class="btn" id="btn-next">${state.i+1>=total?'See Final Ruling':'Next Question'}</button>`
+        : `<button class="btn" id="btn-submit" ${cur.selected===null?'disabled':''}>Submit Answer</button>`}
+    </div>
+    ${rulingHTML}
+  </div>
+  `;
+}
+function attachQuizEvents(){
+  document.getElementById('btn-back').onclick = goLanding;
+  document.querySelectorAll('.opt').forEach(b=>{
+    b.onclick = ()=>selectOption(parseInt(b.getAttribute('data-idx'),10));
+  });
+  const sub = document.getElementById('btn-submit');
+  if(sub) sub.onclick = submitAnswer;
+  const nxt = document.getElementById('btn-next');
+  if(nxt) nxt.onclick = nextQuestion;
+}
+
+function resultsHTML(){
+  const list = state.list;
+  const total = list.length;
+  const correctCount = list.filter(q=>q.selected===q.correct).length;
+  const pct = Math.round((correctCount/total)*1000)/10;
+  const pass = pct >= 75;
+
+  const byCat = {};
+  list.forEach(q=>{
+    if(!byCat[q.cat]) byCat[q.cat] = {ok:0,total:0};
+    byCat[q.cat].total++;
+    if(q.selected===q.correct) byCat[q.cat].ok++;
+  });
+  const bdRows = Object.keys(byCat).map(cat=>{
+    const d = byCat[cat];
+    const p = Math.round((d.ok/d.total)*100);
+    return `<div class="bd-row">
+      <span class="bd-name">${escapeHtml(cat)}</span>
+      <span class="bd-score">${d.ok}/${d.total}</span>
+      <div class="bd-bar-track"><div class="bd-bar-fill" style="width:${p}%"></div></div>
+    </div>`;
+  }).join('');
+
+  const missed = list.filter(q=>q.selected!==q.correct);
+  const letters=['A','B','C','D'];
+  const missedHTML = missed.length===0 ? '<p style="margin-top:18px; color:var(--approve); font-weight:600;">No misses on this file. Clean record.</p>' : `
+    <div class="missed-list">
+      ${missed.map(q=>`
+        <div class="missed-item">
+          <div class="missed-q">${escapeHtml(q.q)}</div>
+          <div class="missed-line your">Your answer: ${letters[q.selected]} &mdash; ${escapeHtml(q.opts[q.selected])}</div>
+          <div class="missed-line right">Correct answer: ${letters[q.correct]} &mdash; ${escapeHtml(q.opts[q.correct])}</div>
+          <div class="missed-exp">${escapeHtml(q.exp)}</div>
+        </div>
+      `).join('')}
+    </div>`;
+
+  return `
+  <button class="back-link" id="btn-back">&larr; Back to start</button>
+  <div class="card">
+    <div class="eyebrow">FILE CLOSED &middot; ${escapeHtml(state.label)}</div>
+    <div class="verdict-row" style="margin-top:10px;">
+      <div class="verdict-stamp ${pass?'approve':'deny'}">${pass?'Pass':'Fail'}</div>
+      <div>
+        <div class="score-line">${correctCount} / ${total} correct &middot; ${pct}%</div>
+        <div class="score-line">Passing line: 75%</div>
+      </div>
+    </div>
+    <div class="breakdown">${bdRows}</div>
+    <div class="results-actions">
+      <button class="btn" id="btn-retake">Retake This File</button>
+      <button class="btn ghost" id="btn-review">Review Missed Questions (${missed.length})</button>
+      <button class="btn ghost" id="btn-home">New Session</button>
+    </div>
+    <div id="missed-panel" class="hidden">${missedHTML}</div>
+  </div>
+  `;
+}
+function attachResultsEvents(){
+  document.getElementById('btn-back').onclick = goLanding;
+  document.getElementById('btn-home').onclick = goLanding;
+  document.getElementById('btn-retake').onclick = retake;
+  document.getElementById('btn-review').onclick = ()=>{
+    document.getElementById('missed-panel').classList.toggle('hidden');
+  };
+}
+
+render();
+</script>
+<script>
+  if('serviceWorker' in navigator){
+    window.addEventListener('load', function(){
+      navigator.serviceWorker.register('./service-worker.js').catch(function(){});
+    });
+  }
+</script>
+</body>
+</html>
